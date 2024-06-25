@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register Page
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <h1>Register</h1>
+    <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group input-container">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control", placeholder="Enter your username") }}
+        </div>
+        <div class="form-group input-container">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", placeholder="Enter your email") }}
+        </div>
+        <div class="form-group input-container">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control", placeholder="Enter your password") }}
+        </div>
+        <div class="form-group button-container">
+            {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+        </div>
+    </form>
+    <div class="form-group button-container">
+        <button onclick="location.href='/login'" class="btn btn-secondary btn-block">Registered user? Log in!</button>
+    </div>
+</div>
+{% endblock %}
