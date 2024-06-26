@@ -32,13 +32,19 @@ Ensure you have the following installed:
     ```bash
     python app.py
     ```
-**Note:** You do not need to set up the database separately as it is included in the project.
+**Note:** You do not need to set up the database separately as it is included in the project. Additionally, the database comes pre-populated with three user accounts:
+
+| Username          | Password         |
+|-------------------|------------------|
+| BluePanda47       | eatingbird321    |
+| MysticFoxy        | snowing          |
+| DefinetlyHuman    | realpass888      |
 
 ## Features
 
 - **User Authentication:**
   - **Registration and Login:** Users can register and log in to manage their tasks securely.
-  - **Secure Password Handling:** Passwords are hashed using `flask_bcrypt` for enhanced security.
+  - **Secure Password Handling:** Passwords are hashed using `flask_bcrypt` for enhanced security. The database holds only the hashed passwords, and they are sent to the database in their hashed form.
 
 - **Task Management:**
   - **Create, Read, Update, Delete (CRUD):** Users can add, view, edit, and delete their tasks effortlessly.
@@ -47,7 +53,7 @@ Ensure you have the following installed:
   - **Personalized Task Lists:** Each user has access to their own task list, ensuring privacy and personalized task management.
   
 - **Flash Messages:**
-  - **User Feedback:** Informative flash messages provide users with feedback on their actions, enhancing user experience.
+  - **User Feedback:** Informative [flash messages](https://flask.palletsprojects.com/en/2.3.x/patterns/flashing/) provide users with feedback on their actions, enhancing user experience.
 
 - **Responsive UI:**
   - **Bootstrap Integration:** A responsive and user-friendly interface designed with Bootstrap ensures accessibility across devices.
