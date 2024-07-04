@@ -25,7 +25,7 @@ Ensure you have the following installed:
 
 3. **Install the dependencies:**
     ```bash
-    pip install Flask flask_login flask_bcrypt flask_sqlalchemy flask_wtf wtforms Flask-Migrate
+    pip install Flask Flask-Migrate flask_login flask_bcrypt flask_sqlalchemy flask_wtf wtforms email-validator
     ```
 
 4. **Run the application:**
