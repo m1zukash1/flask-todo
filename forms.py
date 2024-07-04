@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError, Email
 from models import User
 
@@ -21,4 +21,5 @@ class LoginForm(FlaskForm):
 
 class TodoForm(FlaskForm):
     content = StringField(validators=[InputRequired(), Length(max=4000)], render_kw={"placeholder": "Enter your task"})
+    priority = SelectField('Priority', choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')], coerce=int, default=1)
     submit = SubmitField("Submit Task")

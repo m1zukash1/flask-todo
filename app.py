@@ -2,6 +2,7 @@ from flask import Flask, abort, redirect, render_template, url_for, request, fla
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_required, login_user, LoginManager, current_user, logout_user
 from flask_bcrypt import Bcrypt
+from flask_migrate import Migrate
 from models import db, User, Todo
 from forms import RegisterForm, LoginForm, TodoForm
 from config import Config
@@ -12,6 +13,8 @@ db.init_app(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+migrate = Migrate(app, db)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -62,8 +65,10 @@ def dashboard():
     if form.validate_on_submit():
         new_todo = Todo(
             content=form.content.data,
+            priority=form.priority.data,
             user_id=current_user.id
         )
+        print(new_todo.priority)
         db.session.add(new_todo)
         db.session.commit()
         flash('Todo added successfully!', 'success')
@@ -93,13 +98,16 @@ def update(id):
     form = TodoForm()
     if form.validate_on_submit():
         todo.content = form.content.data
+        todo.priority = form.priority.data
         db.session.commit()
         flash('Todo updated successfully!', 'success')
         return redirect(url_for('dashboard'))
     elif request.method == 'GET':
         form.content.data = todo.content
+        form.priority.data = todo.priority
 
     return render_template('update.html', form=form, todo=todo)
+
 
 @app.route('/logout')
 @login_required

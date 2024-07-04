@@ -17,3 +17,4 @@ class Todo(db.Model):
     content = db.Column(db.String(4000), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    priority = db.Column(db.Integer, default=1)
