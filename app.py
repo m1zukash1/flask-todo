@@ -68,14 +68,18 @@ def dashboard():
             priority=form.priority.data,
             user_id=current_user.id
         )
-        print(new_todo.priority)
         db.session.add(new_todo)
         db.session.commit()
         flash('Todo added successfully!', 'success')
         return redirect(url_for('dashboard'))
-    
-    todos = Todo.query.filter_by(user_id=current_user.id).all()
-    return render_template('dashboard.html', form=form, todos=todos)
+
+    sort_by = request.args.get('sort_by', 'priority')
+    if sort_by == 'date_created':
+        todos = Todo.query.filter_by(user_id=current_user.id).order_by(Todo.date_created.desc()).all()
+    else:
+        todos = Todo.query.filter_by(user_id=current_user.id).order_by(Todo.priority.desc()).all()
+
+    return render_template('dashboard.html', form=form, todos=todos, sort_by=sort_by)
 
 @app.route('/delete/<int:id>')
 @login_required

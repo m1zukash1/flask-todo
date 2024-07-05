@@ -13,10 +13,23 @@ Dashboard
         background-size: cover;
     }
 </style>
+
 <div class="content px-3">
     <h1 class="display-4">Task Master</h1>
     <p>You are currently signed in as: <strong>{{ current_user.username }}</strong></p>
+    
     <div class="task-box">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Your Tasks</h4>
+            <form method="GET" action="{{ url_for('dashboard') }}" class="form-inline">
+                <label for="sort" class="mr-2">Sort By:</label>
+                <select id="sort" name="sort_by" class="form-control mr-2" onchange="this.form.submit()">
+                    <option value="priority" {% if sort_by == 'priority' %}selected{% endif %}>Priority</option>
+                    <option value="date_created" {% if sort_by == 'date_created' %}selected{% endif %}>Date Created</option>
+                </select>
+            </form>
+        </div>
+        
         {% if todos|length < 1 %}
         <h4 class="text-center mt-4">There are no tasks. Create one below!</h4>
         {% else %}
@@ -43,14 +56,15 @@ Dashboard
                     </td>
                     <td class="text-center">{{ todo.date_created.date() }}</td>
                     <td class="text-center">
-                        <a href="/update/{{todo.id}}" class="text-primary">Update</a> |
-                        <a href="/delete/{{todo.id}}" class="text-danger">Delete</a>
+                        <a href="/update/{{todo.id}}" class="btn btn-sm btn-primary">Update</a>
+                        <a href="/delete/{{todo.id}}" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         {% endif %}
+        
         <form action="{{ url_for('dashboard') }}" method="POST" class="mt-4">
             {{ form.hidden_tag() }}
             <div class="form-group">
@@ -61,7 +75,7 @@ Dashboard
                 {{ form.priority.label(class="form-label") }}
                 <div class="star-rating">
                     {% for i in range(5, 0, -1) %}
-                        <input type="radio" id="star{{ i }}" name="priority" value="{{ i }}" {% if form.priority.data == i or (form.priority.data is none and i == 1) %}checked{% endif %}>
+                        <input type="radio" id="star{{ i }}" name="priority" value="{{ i }}">
                         <label for="star{{ i }}">&#9733;</label>
                     {% endfor %}
                 </div>
